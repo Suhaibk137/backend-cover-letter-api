@@ -1,14 +1,22 @@
 {
   "version": 2,
-  "functions": {
-    "api/generate-cover-letter.js": {
-      "memory": 1024,
-      "maxDuration": 10
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
     }
-  },
+  ],
+  "rewrites": [
+    { "source": "/", "destination": "index.js" },
+    { "source": "/api/(.*)", "destination": "/api/$1" }
+  ],
   "headers": [
     {
-      "source": "/api/(.*)",
+      "source": "/(.*)",
       "headers": [
         { "key": "Access-Control-Allow-Credentials", "value": "true" },
         { "key": "Access-Control-Allow-Origin", "value": "*" },
